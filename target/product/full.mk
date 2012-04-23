@@ -30,3 +30,4 @@ PRODUCT_NAME := full
 PRODUCT_DEVICE := generic
 PRODUCT_BRAND := Android
 PRODUCT_MODEL := TEST
+PRODUCT_MODEL := Full Android on Emulator
