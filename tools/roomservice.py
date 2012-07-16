@@ -19,13 +19,13 @@ except:
     device = product
 
 if not depsonly:
-    print "Device %s not found. Attempting to retrieve device repository from CyanogenMod Github (http://github.com/CyanogenMod)." % device
+    print "Device %s not found. Attempting to retrieve device repository from VillainMod Github (http://github.com/VillainMod)." % device
 
 repositories = []
 
 page = 1
 while not depsonly:
-    result = json.loads(urllib2.urlopen("https://api.github.com/users/CyanogenMod/repos?page=%d" % page).read())
+    result = json.loads(urllib2.urlopen("https://api.github.com/users/VillainMod/repos?page=%d" % page).read())
     if len(result) == 0:
         break
     for res in result:
@@ -102,12 +102,12 @@ def add_to_manifest(repositories):
         repo_name = repository['repository']
         repo_target = repository['target_path']
         if exists_in_tree(lm, repo_name):
-            print 'CyanogenMod/%s already exists' % (repo_name)
+            print 'VillainMod/%s already exists' % (repo_name)
             continue
 
-        print 'Adding dependency: CyanogenMod/%s -> %s' % (repo_name, repo_target)
+        print 'Adding dependency: VillainMod/%s -> %s' % (repo_name, repo_target)
         project = ElementTree.Element("project", attrib = { "path": repo_target,
-            "remote": "github", "name": "CyanogenMod/%s" % repo_name, "revision": "jellybean" })
+            "remote": "github", "name": "VillainMod/%s" % repo_name, "revision": "jellybean" })
 
         if 'branch' in repository:
             project.set('revision',repository['branch'])
@@ -124,7 +124,7 @@ def add_to_manifest(repositories):
 
 def fetch_dependencies(repo_path):
     print 'Looking for dependencies'
-    dependencies_path = repo_path + '/cm.dependencies'
+    dependencies_path = repo_path + '/villain.dependencies'
     syncable_repos = []
 
     if os.path.exists(dependencies_path):
@@ -133,7 +133,7 @@ def fetch_dependencies(repo_path):
         fetch_list = []
 
         for dependency in dependencies:
-            if not is_in_manifest("CyanogenMod/%s" % dependency['repository']):
+            if not is_in_manifest("VillainMod/%s" % dependency['repository']):
                 fetch_list.append(dependency)
                 syncable_repos.append(dependency['target_path'])
 
@@ -177,4 +177,4 @@ else:
             print "Done"
             sys.exit()
 
-print "Repository for %s not found in the CyanogenMod Github repository list. If this is in error, you may need to manually add it to your local_manifest.xml." % device
+print "Repository for %s not found in the VillainMod Github repository list. If this is in error, you may need to manually add it to your local_manifest.xml." % device
